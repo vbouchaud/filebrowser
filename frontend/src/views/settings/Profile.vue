@@ -37,7 +37,7 @@
     </div>
 
     <div class="column">
-      <form class="card" v-if="!user.lockPassword" @submit="updatePassword">
+      <form class="card" v-if="!user.lockPassword && authMethod != 'ldap'" @submit="updatePassword">
         <div class="card-title">
           <h2>{{ $t("settings.changePassword") }}</h2>
         </div>
@@ -75,6 +75,7 @@
 import { mapState, mapMutations } from "vuex";
 import { users as api } from "@/api";
 import Languages from "@/components/settings/Languages";
+import { authMethod } from "@/utils/constants";
 
 export default {
   name: "settings",
@@ -106,6 +107,7 @@ export default {
 
       return `${baseClass} input--red`;
     },
+    authMethod: () => authMethod,
   },
   created() {
     this.setLoading(false);

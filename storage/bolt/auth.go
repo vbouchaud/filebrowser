@@ -20,6 +20,8 @@ func (s authBackend) Get(t settings.AuthMethod) (auth.Auther, error) {
 		auther = &auth.JSONAuth{}
 	case auth.MethodProxyAuth:
 		auther = &auth.ProxyAuth{}
+	case auth.MethodLdapAuth:
+		auther = &auth.LdapAuth{}
 	case auth.MethodNoAuth:
 		auther = &auth.NoAuth{}
 	default:

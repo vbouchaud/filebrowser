@@ -21,11 +21,23 @@ type Settings struct {
 	Commands      map[string][]string `json:"commands"`
 	Shell         []string            `json:"shell"`
 	Rules         []rules.Rule        `json:"rules"`
+	Ldap          Ldap                `json:"ldap"`
 }
 
 // GetRules implements rules.Provider.
 func (s *Settings) GetRules() []rules.Rule {
 	return s.Rules
+}
+
+type Ldap struct {
+	Url              string `json:"url"`
+	BindDN           string `json:"bind-dn"`
+	BindPassword     string `json:"bind-password"`
+	SearchBase       string `json:"search-base"`
+	SearchScope      string `json:"search-scope"`
+	SearchFilter     string `json:"ldap.search-filter"`
+	MemberofProperty string `json:"ldap.property-memberof"`
+	UsernameProperty string `json:"ldap.property-username"`
 }
 
 // Server specific settings.

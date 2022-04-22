@@ -45,7 +45,7 @@
         </button>
 
         <button
-          v-if="authMethod == 'json'"
+          v-if="authMethod == 'json' || authMethod == 'ldap'"
           @click="logout"
           class="action"
           id="logout"

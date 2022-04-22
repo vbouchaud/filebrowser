@@ -7,6 +7,7 @@ require (
 	github.com/caddyserver/caddy v1.0.3
 	github.com/disintegration/imaging v1.6.2
 	github.com/dsoprea/go-exif/v3 v3.0.0-20201216222538-db167117f483
+	github.com/go-ldap/ldap/v3 v3.4.2
 	github.com/golang-jwt/jwt/v4 v4.4.1
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.0
@@ -29,6 +30,7 @@ require (
 )
 
 require (
+	github.com/Azure/go-ntlmssp v0.0.0-20200615164410-66371956d46c // indirect
 	github.com/andybalholm/brotli v1.0.1 // indirect
 	github.com/cenkalti/backoff v2.1.1+incompatible // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -38,6 +40,7 @@ require (
 	github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-acme/lego v2.5.0+incompatible // indirect
+	github.com/go-asn1-ber/asn1-ber v1.5.1 // indirect
 	github.com/go-errors/errors v1.1.1 // indirect
 	github.com/golang/geo v0.0.0-20200319012246-673a6f80352d // indirect
 	github.com/golang/snappy v0.0.2 // indirect

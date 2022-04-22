@@ -36,6 +36,15 @@ func addConfigFlags(flags *pflag.FlagSet) {
 	flags.String("auth.method", string(auth.MethodJSONAuth), "authentication type")
 	flags.String("auth.header", "", "HTTP header for auth.method=proxy")
 
+	flags.String("ldap.url", "", "")
+	flags.String("ldap.bind-dn", "", "")
+	flags.String("ldap.bind-password", "", "")
+	flags.String("ldap.search-base", "", "")
+	flags.String("ldap.search-scope", "sub", "")
+	flags.String("ldap.search-filter", "(&(objectClass=inetOrgPerson)(uid=%s))", "")
+	flags.String("ldap.property-memberof", "ismemberof", "")
+	flags.String("ldap.property-username", "uid", "")
+
 	flags.String("recaptcha.host", "https://www.google.com", "use another host for ReCAPTCHA. recaptcha.net might be useful in China")
 	flags.String("recaptcha.key", "", "ReCaptcha site key")
 	flags.String("recaptcha.secret", "", "ReCaptcha secret")
@@ -114,6 +123,23 @@ func getAuthentication(flags *pflag.FlagSet, defaults ...interface{}) (settings.
 		auther = jsonAuth
 	}
 
+	if method == auth.MethodLdapAuth {
+		ldapAuth := &auth.LdapAuth{
+			Ldap: auth.Ldap{
+				LdapURL:          mustGetString(flags, "ldap.url"),
+				BindDN:           mustGetString(flags, "ldap.bind-dn"),
+				BindPassword:     mustGetString(flags, "ldap.bind-password"),
+				SearchBase:       mustGetString(flags, "ldap.search-base"),
+				SearchScope:      mustGetString(flags, "ldap.search-scope"),
+				SearchFilter:     mustGetString(flags, "ldap.search-filter"),
+				MemberofProperty: mustGetString(flags, "ldap.property-memberof"),
+				UsernameProperty: mustGetString(flags, "ldap.property-username"),
+			},
+		}
+
+		auther = ldapAuth
+	}
+
 	if auther == nil {
 		panic(errors.ErrInvalidAuthMethod)
 	}
@@ -127,6 +153,7 @@ func printSettings(ser *settings.Server, set *settings.Settings, auther auth.Aut
 	fmt.Fprintf(w, "Sign up:\t%t\n", set.Signup)
 	fmt.Fprintf(w, "Create User Dir:\t%t\n", set.CreateUserDir)
 	fmt.Fprintf(w, "Auth method:\t%s\n", set.AuthMethod)
+	//fmt.Fprintf(w, "Ldap:\t%s\t\n", strings.Join(set.Ldap, " "))
 	fmt.Fprintf(w, "Shell:\t%s\t\n", strings.Join(set.Shell, " "))
 	fmt.Fprintln(w, "\nBranding:")
 	fmt.Fprintf(w, "\tName:\t%s\n", set.Branding.Name)
